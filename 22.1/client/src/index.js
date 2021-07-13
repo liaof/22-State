@@ -15,12 +15,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
-
-
-
-
-// The Home page component keeps track of the current category we are viewing.
-
-// The CategoryMenu component keeps track of our category list from an Apollo query.
-
-// The ProductList component displays products from an Apollo query.
