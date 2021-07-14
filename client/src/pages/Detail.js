@@ -19,28 +19,37 @@ function Detail() {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
   const { products, cart } = state;;
 
-  const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id);
+const addToCart = () => {
+    const itemInCart = cart.find((cartItem) => cartItem._id === id)// try to find an item that's in the cart and has the same id as currentProduct
   
-    if (itemInCart) {
+    if (itemInCart) {//if the item already exists in the cart, simply update the item quantity
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       });
-    } else {
+      // if we're updating quantity, use existing item data and increment purchaseQuantity value by one
+      idbPromise('cart', 'put', {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1// find the purchaseQuantity of itemInCart, then increment
+      });
+    } else {// otherwise add to cart
       dispatch({
         type: ADD_TO_CART,
         product: { ...currentProduct, purchaseQuantity: 1 }
       });
+      // if product isn't in the cart yet, add it to the current shopping cart in IndexedDB
+      idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
     }
-  };
-  const removeFromCart = () => {
+}
+const removeFromCart = () => {
     dispatch({
       type: REMOVE_FROM_CART,
       _id: currentProduct._id
     });
-  };
+    // after the item is successfully removed, delete it's counterpart in the cache
+    idbPromise('cart','delete',{...currentProduct});
+};
 
   // check if there is data in the global state's product array, then figure out which one to display by match the _id value grabbed with useParams()
   // if there is no data in the global state's product array, update the global state with the data from useQuery(), then run it again
