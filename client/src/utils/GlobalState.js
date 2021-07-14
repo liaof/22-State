@@ -14,9 +14,11 @@ const StoreProvider = ({ value = [], ...props }) => {
     // state is the most up to date version of the global state object
     // dispatch is the method executed to update the state.
     const [state, dispatch] = useProductReducer({
-      products: [],
-      categories: [],
-      currentCategory: '',
+        products: [],
+        cart: [],
+        cartOpen: false,
+        categories: [],
+        currentCategory: ''
     });
     // use this to confirm it works!
     console.log(state);
@@ -31,5 +33,5 @@ const useStoreContext = () => {
     return useContext(StoreContext);
   };
 
-  
+
 export { StoreProvider, useStoreContext };
