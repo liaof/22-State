@@ -29,6 +29,12 @@
 - Use global state across multiple React components.
 - Write reducers that update and delete array items.
 
+- Read and write data to IndexedDB.
+- Use React Hooks like useEffect().
+- Dispatch updates to the global state object.
+- Use IndexedDB within a React component.
+- Cache server-side data using IndexedDB.
+
 ##### Tech Used
 - Stripe - a suite of payment processing APIs
 - Stripe.js - Stripe’s JavaScript library for building payment flows. It uses Stripe Elements, a set of prebuilt, customizable UI components to allow platforms to collect sensitive payment information.(For the purposes of this module's application, you’ll use the @stripe/stripe-js (Links to an external site.) npm package to redirect your app to a prebuilt Stripe checkout page.)

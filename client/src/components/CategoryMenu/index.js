@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_CATEGORIES } from '../../utils/queries';
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
 
 function CategoryMenu() {
 
@@ -11,7 +12,7 @@ function CategoryMenu() {
   // const categories = categoryData?.categories || [];
   const [state, dispatch] = useStoreContext();// as soon as this componenet is rendered, it retrieves the current state of the global state object and it's associated dispatch()
   const { categories } = state;// because this componenet only needs the categoies array out of the global state, destrucutre it
-  const { data: categoryData } = useQuery(QUERY_CATEGORIES);
+  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);;
 
   // this function allows us to use the data from the query to update the global state object, which would usually not be possible because useStoreContext is synchronous while useQuery is asynchronous
   useEffect(() => {
@@ -21,6 +22,17 @@ function CategoryMenu() {
       dispatch({
         type: UPDATE_CATEGORIES,
         categories: categoryData.categories
+      });
+      // write category data to the categories object store in IndexedDB
+      categoryData.categories.forEach(category => {
+        idbPromise('categories', 'put', category);
+      });
+    } else if (!loading) {// use IndexedDB if there is no connection(useQuery.loading)
+      idbPromise('categories', 'get').then(categories => {
+        dispatch({
+          type: UPDATE_CATEGORIES,
+          categories: categories
+        });
       });
     }
   }, [categoryData, dispatch]);
