@@ -35,6 +35,13 @@
 - Use IndexedDB within a React component.
 - Cache server-side data using IndexedDB.
 
+- Reading API documentation.
+- Building GraphQL queries and resolvers.
+- Defining client-side routes with React Router.
+- Generating a checkout session with the Stripe API.
+- Capturing a completed order in your own database.
+- Using the useLazyQuery Hook to handle delayed requests.
+
 ##### Tech Used
 - Stripe - a suite of payment processing APIs
 - Stripe.js - Stripe’s JavaScript library for building payment flows. It uses Stripe Elements, a set of prebuilt, customizable UI components to allow platforms to collect sensitive payment information.(For the purposes of this module's application, you’ll use the @stripe/stripe-js (Links to an external site.) npm package to redirect your app to a prebuilt Stripe checkout page.)
