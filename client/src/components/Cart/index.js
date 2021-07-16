@@ -53,6 +53,7 @@ const Cart = () => {
         })
     }
     // this useEffect() Hook is specifically for the Stripe session
+    // THIS IS HOW WE REDIRECT TO OUR SUCCESSPAGE AFTER CHECKOUT IN THE STRIPE SESSION
     useEffect(() => {
         if (data) {
           stripePromise.then((res) => {
